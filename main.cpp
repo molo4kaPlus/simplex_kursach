@@ -4,6 +4,7 @@
 
 int main()
 {
-    Data data(1, 1);
-    std::cout << data.size_x << std::endl;
+    Data data;
+    data.read_from_file("1.txt");
+    std::cout << "xueta" << std::endl;
 }

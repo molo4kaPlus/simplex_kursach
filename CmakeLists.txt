@@ -3,7 +3,8 @@ project(exprise VERSION 0.2.1 LANGUAGES C CXX)
 
 set(sources
     ${CMAKE_SOURCE_DIR}/main.cpp
-    ${CMAKE_SOURCE_DIR}/src/
+    ${CMAKE_SOURCE_DIR}/src/data_handler.hpp
+    ${CMAKE_SOURCE_DIR}/src/data.hpp
 )
 
 add_executable(simplex ${sources})

@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/gleb/Desktop/simplex_kursach/build",
-  "command": "C:/Users/gleb/gcc/bin/g++.exe   -g -o CMakeFiles/simplex.dir/main.cpp.obj -c C:/Users/gleb/Desktop/simplex_kursach/main.cpp",
-  "file": "C:/Users/gleb/Desktop/simplex_kursach/main.cpp",
-  "output": "CMakeFiles/simplex.dir/main.cpp.obj"
-}
-]

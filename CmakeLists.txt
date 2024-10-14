@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.21.0)
+project(exprise VERSION 0.2.1 LANGUAGES C CXX)
+
+set(sources
+    ${CMAKE_SOURCE_DIR}/main.cpp
+    ${CMAKE_SOURCE_DIR}/src/
+)
+
+add_executable(simplex ${sources})

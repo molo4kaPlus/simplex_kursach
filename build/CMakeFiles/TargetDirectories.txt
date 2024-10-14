@@ -1,0 +1,3 @@
+C:/Users/gleb/Desktop/simplex_kursach/build/CMakeFiles/simplex.dir
+C:/Users/gleb/Desktop/simplex_kursach/build/CMakeFiles/edit_cache.dir
+C:/Users/gleb/Desktop/simplex_kursach/build/CMakeFiles/rebuild_cache.dir

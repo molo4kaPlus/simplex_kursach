@@ -10,7 +10,6 @@ class Data
 {
 private:
     std::vector<std::vector<double>> _table;
-    std::vector<double> _basis;
     std::vector<double> _func;
     int size_x, size_y;
 
@@ -22,8 +21,8 @@ public:
     void print_to_console();
     std::vector<std::vector<double>>* get_table_ptr();
     std::vector<std::vector<double>> get_table();
-    std::vector<double>* get_basis_ptr();
     std::vector<double>* get_func_ptr();
+    std::vector<double> get_func();
 };
 
 Data::Data() {}
@@ -83,24 +82,39 @@ void Data::write_to_file()
 
 void Data::print_to_console()
 {
+    std::cout << "matrix:" << std::endl;   
+    for (int x = 0; x < _func.size(); x++)
+    {
+        std::cout << std::setw(4) << "x" << x << " | ";
+    }
+    std::cout << std::endl;
     for (int x = 0; x < size_x; ++x)
     {
         for (int y = 0; y < size_y; ++y)
         {
-            std::cout << std::setw(5) << _table[x][y]; // setw(4) задает ширину поля вывода
+            std::cout << std::setw(5) << _table[x][y] << " | "; // setw(4) задает ширину поля вывода
         }
         std::cout << std::endl;
     }
+
+    std::cout << "F(x):" << std::endl;
+
+    for (int x = 0; x < _func.size(); x++)
+    {
+        if (x == _func.size() - 1)
+        {
+            if (_func[x] == 1) { std::cout << " max " << " | "; }
+            else { std::cout  << " min " << " | "; }
+            break;
+        }
+        std::cout << std::setw(5) << _func[x] << " | ";
+    }
+    std::cout << std:: endl;
 }
 
 std::vector<std::vector<double>>* Data::get_table_ptr()
 {
     return &_table;
-}
-
-std::vector<double>* Data::get_basis_ptr()
-{
-    return &_basis;
 }
 
 std::vector<double>* Data::get_func_ptr()
@@ -111,4 +125,9 @@ std::vector<double>* Data::get_func_ptr()
 std::vector<std::vector<double>> Data::get_table()
 {
     return _table;
+}
+
+std::vector<double> Data::get_func()
+{
+    return _func;
 }

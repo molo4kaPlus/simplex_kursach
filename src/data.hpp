@@ -14,7 +14,7 @@ private:
     int size_x, size_y;
 
 public:
-    Data(); // data initialization
+    Data();
 
     void read_from_file(std::string file_name);
     void write_to_file();
@@ -85,7 +85,8 @@ void Data::print_to_console()
     std::cout << "matrix:" << std::endl;   
     for (int x = 0; x < _func.size(); x++)
     {
-        std::cout << std::setw(4) << "x" << x << " | ";
+        if (x == 0) { std::cout << std::setw(5) << " <="  << " | "; }
+        else { std::cout << std::setw(4) << "x" << x + 1 << " | "; }
     }
     std::cout << std::endl;
     for (int x = 0; x < size_x; ++x)
@@ -98,7 +99,12 @@ void Data::print_to_console()
     }
 
     std::cout << "F(x):" << std::endl;
-
+    for (int x = 0; x < _func.size(); x++)
+    {
+        if (x == _func.size() - 1) { std::cout << std::setw(5) << " ->"  << " | "; }
+        else { std::cout << std::setw(4) << "x" << x + 1 << " | "; }
+    }
+    std::cout << std::endl;
     for (int x = 0; x < _func.size(); x++)
     {
         if (x == _func.size() - 1)

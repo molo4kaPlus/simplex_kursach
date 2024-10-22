@@ -50,7 +50,7 @@ Simplex::Simplex(Data *data)
 
 std::vector<std::vector<double>> Simplex::calculate()
 {
-
+    
 }
 
 void Simplex::find_main_col(int &mainCol)

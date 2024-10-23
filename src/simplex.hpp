@@ -13,12 +13,13 @@ private:
     std::vector<std::vector<double>> _table;
     std::vector<double> &_funcPtr;
     std::vector<double> _basis;
-    int _mainCol, n, m;
+    int _mainCol, _mainRow, n, m;
 
-    void find_main_col(int &mainCol);
+    void find_main_col();
+    void find_main_row();
 public:
     Simplex(Data *data);
-    std::vector<std::vector<double>> calculate();
+    void calculate();
 };
 
 Simplex::Simplex(Data *data)
@@ -48,20 +49,29 @@ Simplex::Simplex(Data *data)
     n = _table.size();
 }
 
-std::vector<std::vector<double>> Simplex::calculate()
+void Simplex::calculate()
 {
-    
+    find_main_col();
 }
 
-void Simplex::find_main_col(int &mainCol)
+void Simplex::find_main_col()
 {
-    mainCol = 1;
-    for (int j = 0; j < _funcPtr.size() - 1; j++)
+    _mainCol = 1;
+    for (int j = 0; j < n; j++)
     {
-        if (_funcPtr[j] < _funcPtr[mainCol])
+        if (_table[m-1][j] < _table[m-1][_mainCol])
         {
-            mainCol = j;
+            _mainCol = j;
         }
     }
-    std::cout << _funcPtr[mainCol] << std::endl;
+    std::cout << _mainCol << std::endl;
+}
+
+void Simplex::find_main_row()
+{
+    _mainRow = 0;
+    for(int i = 0; i < m - 1; i++)
+    {
+
+    }
 }

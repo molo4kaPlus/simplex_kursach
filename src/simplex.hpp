@@ -82,16 +82,17 @@ void Simplex::calculate()
 
         _table = new_table;
     }
+    
         for (int x = 0; x < _table.size(); ++x)
         {
             for (int y = 0; y < _table[0].size(); ++y)
             {
-                std::cout << std::setw(5) << _table[x][y] << " | ";
+                std::cout << std::setprecision(2) << std::setw(5) << _table[x][y] << " | ";
             }
             std::cout << std::endl;
         }
         std::cout << std::endl;
-
+    
     double func_result = 0;
     for (int i = 0; i < _result.size(); i++)
     {
@@ -116,6 +117,9 @@ bool Simplex::is_it_end()
             break;
         }
     }
+
+    std::cout << flag << std::endl;
+
     return flag;
 }
 

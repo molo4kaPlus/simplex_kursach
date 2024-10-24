@@ -90,7 +90,7 @@ void Data::write_to_file(std::vector<double> *result)
     }
     else 
     { 
-        out << "cannot open file" << std::endl; 
+        std::cout << "cannot open file" << std::endl; 
         throw noexcept("could not read the file"); 
     }
 }

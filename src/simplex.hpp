@@ -97,6 +97,15 @@ void Simplex::calculate()
             _result[i] = 0;
         }
     }
+
+    double funcResult;
+    for (int i = 0; i < _result.size() - 1; i++)
+    {
+        funcResult += _result[i] * _funcPtr[i];
+    }
+    _result[_result.size() - 1] = funcResult * -1;
+
+    _data.write_to_file(&_result);
 }
 
 bool Simplex::is_it_end()

@@ -12,12 +12,12 @@ private:
     std::vector<std::vector<double>> _table;
     std::vector<double> _func;
     int size_x, size_y;
-
+    std::string _fileName;
 public:
     Data();
 
     void read_from_file(std::string file_name);
-    void write_to_file();
+    void write_to_file(std::vector<double> *result);
     void print_to_console();
     std::vector<std::vector<double>>* get_table_ptr();
     std::vector<std::vector<double>> get_table();
@@ -29,6 +29,7 @@ Data::Data() {}
 
 void Data::read_from_file(std::string file_name)
 {
+    _fileName = file_name;
     std::ifstream file(file_name.c_str());
     if (!file.is_open())
     {
@@ -83,9 +84,28 @@ void Data::read_from_file(std::string file_name)
     }
 }
 
-void Data::write_to_file()
+void Data::write_to_file(std::vector<double> *result)
 {
-    throw noexcept("has no implementation");
+    std::ofstream out;
+    out.open("result_" + _fileName);
+    if (out.is_open())
+    {
+        for (int i = 0; i < result->size() - 1; i ++)
+        {
+            out << std::setw(4) << "x" << i + 1 << " | ";
+        }
+        out << std::setw(5) << "F ="  << " | " << std::endl;
+        for (int i = 0; i < result->size() - 1; i ++)
+        {
+            out << std::setw(5) << (*result)[i] << " | ";
+        }
+        out << std::setw(5) << (*result)[result->size() - 1]  << " | " << std::endl;
+    }
+    else 
+    { 
+        std::cout << "cannot open file" << std::endl; 
+        throw noexcept("could not read the file"); 
+    }
 }
 
 void Data::print_to_console()

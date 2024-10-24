@@ -13,7 +13,7 @@ int main()
 
     // simplex
     Data data;
-    data.read_from_file("3.txt");
+    data.read_from_file("5.txt");
     //data.print_to_console();
     Simplex simplex(&data);
     simplex.calculate();

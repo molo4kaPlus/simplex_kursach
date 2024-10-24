@@ -84,9 +84,9 @@ void Data::write_to_file(std::vector<double> *result)
         out << std::setw(5) << "F ="  << " | " << std::endl;
         for (int i = 0; i < result->size() - 1; i ++)
         {
-            out << std::setw(5) << std::setprecision(2) << (*result)[i] << " | ";
+            out << std::setw(5) <<  (*result)[i] << " | ";
         }
-        out << std::setw(5) << std::setprecision(2) << (*result)[result->size() - 1]  << " | " << std::endl;
+        out << std::setw(5) << (*result)[result->size() - 1]  << " | " << std::endl;
     }
     else 
     { 

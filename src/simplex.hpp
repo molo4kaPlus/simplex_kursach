@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <iostream>
 
+#include <algorithm>
+
 class Simplex
 {
 private:
@@ -13,10 +15,12 @@ private:
     std::vector<std::vector<double>> _table;
     std::vector<double> &_funcPtr;
     std::vector<double> _basis;
+    std::vector<double> _result;
     int _mainCol, _mainRow, n, m;
 
     void find_main_col();
     void find_main_row();
+    bool is_it_end();
 public:
     Simplex(Data *data);
     void calculate();
@@ -28,7 +32,7 @@ Simplex::Simplex(Data *data)
     n = _tablePtr[0].size();
     m = _tablePtr.size();
     _table.resize(m, std::vector<double>(n + m - 1));
-
+    _result.resize(_tablePtr[0].size());
     //добавляем базисные переменыне
     for (int i = 0; i < m; i++)
     {
@@ -51,7 +55,64 @@ Simplex::Simplex(Data *data)
 
 void Simplex::calculate()
 {
-    find_main_col();
+    while(!is_it_end())
+    {
+        find_main_col();
+        find_main_row();
+        _basis[_mainRow] = _mainCol;
+
+        std::vector<std::vector<double>> new_table(m, std::vector<double>(n));
+
+        for (int j = 0; j < n; j++)
+        {
+            new_table[_mainRow][j] = _table[_mainRow][j] / _table[_mainRow][_mainCol];
+        }
+
+        for (int i = 0; i < m; i++)
+        {
+            if (i == _mainRow)
+            {
+                continue;
+            }
+
+            for(int j = 0; j < n; j++)
+            {
+                new_table[i][j] = _table[i][j] - _table[i][_mainCol] * new_table[_mainRow][j];
+            }
+        }
+
+        _table = new_table;
+    }
+
+    for (int i = 0; i < _result.size(); i++)
+    {
+        auto k = std::find(_basis.begin(), _basis.end(), i+1);
+        int l = k-_basis.begin();
+        if (l != -1)
+        {
+            _result[i] = _table[l][0];
+        }
+        else
+        {
+            _result[i] = 0;
+        }
+    }
+}
+
+bool Simplex::is_it_end()
+{
+    bool flag = true;
+
+    for (int j = 1; j < n; j++)
+    {
+        if (_table[m - 1][j] < 0)
+        {
+            flag = false;
+            break;
+        }
+    }
+
+    return flag;
 }
 
 void Simplex::find_main_col()
@@ -64,7 +125,6 @@ void Simplex::find_main_col()
             _mainCol = j;
         }
     }
-    std::cout << _mainCol << std::endl;
 }
 
 void Simplex::find_main_row()
@@ -72,6 +132,17 @@ void Simplex::find_main_row()
     _mainRow = 0;
     for(int i = 0; i < m - 1; i++)
     {
+        if(_table[i][_mainCol] > 0)
+        {
+            _mainRow = i;
+        }
+    }
 
+    for (int i = _mainRow + 1; i < m - 1; i++)
+    {
+        if((_table[i][_mainCol] > 0) && ((_table[i][0] / _table[i][_mainCol]) < _table[_mainRow][0] / _table[_mainRow][_mainCol]))
+        {
+            _mainRow = i;
+        }
     }
 }

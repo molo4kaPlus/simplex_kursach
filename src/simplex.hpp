@@ -13,7 +13,6 @@ private:
     Data &_data;
     std::vector<std::vector<double>> &_tablePtr;
     std::vector<std::vector<double>> _table;
-    std::vector<double> &_funcPtr;
     std::vector<double> _basis;
     std::vector<double> _result;
     int _mainCol, _mainRow, n, m;
@@ -27,13 +26,13 @@ public:
 };
 
 Simplex::Simplex(Data *data)
-    :_data(*data), _tablePtr(*data->get_table_ptr()), _funcPtr(*data->get_func_ptr())
+    :_data(*data), _tablePtr(*data->get_table_ptr())
 {
-    n = _tablePtr[0].size();
     m = _tablePtr.size();
+    n = _tablePtr[0].size();
     _table.resize(m, std::vector<double>(n + m - 1));
     _result.resize(_tablePtr[0].size());
-    //добавляем базисные переменыне
+
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < _table[0].size(); j++)
@@ -49,8 +48,7 @@ Simplex::Simplex(Data *data)
             _basis.push_back(n + i);
         }
     }
-
-    n = _table.size();
+    n = _table[0].size();
 }
 
 void Simplex::calculate()
@@ -81,29 +79,27 @@ void Simplex::calculate()
             }
         }
 
+
         _table = new_table;
     }
+        for (int x = 0; x < _table.size(); ++x)
+        {
+            for (int y = 0; y < _table[0].size(); ++y)
+            {
+                std::cout << std::setw(5) << _table[x][y] << " | ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
 
+    double func_result = 0;
     for (int i = 0; i < _result.size(); i++)
     {
-        auto k = std::find(_basis.begin(), _basis.end(), i+1);
-        int l = k-_basis.begin();
-        if (l != -1)
-        {
-            _result[i] = _table[l][0];
-        }
-        else
-        {
-            _result[i] = 0;
-        }
+        auto it = std::find(_basis.begin(), _basis.end(), i + 1);
+        int k = (it != _basis.end()) ? std::distance(_basis.begin(), it) : -1;
+        if (k != -1) { _result[i] = _table[k][0]; }
+        else { _result[i] = 0; }
     }
-
-    double funcResult;
-    for (int i = 0; i < _result.size() - 1; i++)
-    {
-        funcResult += _result[i] * _funcPtr[i];
-    }
-    _result[_result.size() - 1] = funcResult * -1;
 
     _data.write_to_file(&_result);
 }
@@ -114,20 +110,19 @@ bool Simplex::is_it_end()
 
     for (int j = 1; j < n; j++)
     {
-        if (_table[m - 1][j] < 0)
+        if (_table[m-1][j] < 0)
         {
             flag = false;
             break;
         }
     }
-
     return flag;
 }
 
 void Simplex::find_main_col()
 {
     _mainCol = 1;
-    for (int j = 0; j < n; j++)
+    for (int j = 2; j < n; j++)
     {
         if (_table[m-1][j] < _table[m-1][_mainCol])
         {
@@ -139,17 +134,18 @@ void Simplex::find_main_col()
 void Simplex::find_main_row()
 {
     _mainRow = 0;
-    for(int i = 0; i < m - 1; i++)
+    for(int i = 0; i < (m - 1); i++)
     {
         if(_table[i][_mainCol] > 0)
         {
             _mainRow = i;
+            break;
         }
     }
 
-    for (int i = _mainRow + 1; i < m - 1; i++)
+    for (int i = (_mainRow + 1); i < (m - 1); i++)
     {
-        if((_table[i][_mainCol] > 0) && ((_table[i][0] / _table[i][_mainCol]) < _table[_mainRow][0] / _table[_mainRow][_mainCol]))
+        if((_table[i][_mainCol] > 0) && ((_table[i][0] / _table[i][_mainCol]) < (_table[_mainRow][0] / _table[_mainRow][_mainCol])))
         {
             _mainRow = i;
         }

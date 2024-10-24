@@ -73,6 +73,14 @@ void Data::read_from_file(std::string file_name)
             ss.ignore();
         }
     }
+
+    if (_func[_func.size()-1] == 1)
+    {
+        for (int i = 0; i < _func.size() - 1; i++)
+        {
+            _func[i] = _func[i] * -1;
+        }
+    }
 }
 
 void Data::write_to_file()
@@ -115,7 +123,7 @@ void Data::print_to_console()
         }
         std::cout << std::setw(5) << _func[x] << " | ";
     }
-    std::cout << std:: endl;
+    std::cout << std::endl << "----------------------------------------------" << std:: endl;
 }
 
 std::vector<std::vector<double>>* Data::get_table_ptr()

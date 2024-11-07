@@ -15,6 +15,7 @@ set(sources
     ${CMAKE_SOURCE_DIR}/src/data_handler.hpp
     ${CMAKE_SOURCE_DIR}/src/data.hpp
     ${CMAKE_SOURCE_DIR}/src/simplex.hpp
+    ${CMAKE_SOURCE_DIR}/src/task_creator.hpp
 )
 
 add_executable(simplex ${sources})

@@ -43,7 +43,6 @@ void Data::read_from_file(std::string file_name)
     char comma;
 
     ss >> size_x >> comma >> size_y;
-    size_y++;
 
     _table.resize(size_x, std::vector<double>(size_y));
 

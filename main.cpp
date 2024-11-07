@@ -1,6 +1,7 @@
 #include "src/data_handler.hpp"
 #include "src/data.hpp"
 #include "src/simplex.hpp"
+#include "src/task_creator.hpp"
 
 #include <omp.h>
 
@@ -11,9 +12,13 @@ int main()
 
     t_start = omp_get_wtime();
 
+    // create task
+    TaskCreator creator;
+    creator.generateMatrixFile(7, 7, "task.txt");
+
     // simplex
     Data data;
-    data.read_from_file("5.txt");
+    data.read_from_file("task.txt");
     //data.print_to_console();
     Simplex simplex(&data);
     simplex.calculate();

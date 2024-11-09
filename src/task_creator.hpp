@@ -20,7 +20,7 @@ void TaskCreator::generateMatrixFile(int width, int height, const std::string& f
 
         std::ofstream file(filename);
         if (!file.is_open()) {
-            std::cerr << "Ошибка при открытии файла " << filename << std::endl;
+            std::cerr << "err opening file " << filename << std::endl;
             return;
         }
 

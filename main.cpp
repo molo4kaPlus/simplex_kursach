@@ -14,7 +14,7 @@ int main()
 
     // create task
     TaskCreator creator;
-    creator.generateMatrixFile(7, 7, "task.txt");
+    creator.generateMatrixFile(4, 4, "task.txt");
 
     // simplex
     Data data;

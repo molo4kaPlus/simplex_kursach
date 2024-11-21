@@ -85,7 +85,7 @@ void Data::write_to_file(std::vector<double> *result)
         {
             out << std::setw(5) <<  (*result)[i] << " | ";
         }
-        out << std::setw(5) << (*result)[result->size() - 1]  << " | " << std::endl;
+        out << std::setw(3) << (*result)[result->size() - 1]  << " | " << std::endl;
     }
     else 
     { 

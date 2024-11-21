@@ -53,8 +53,10 @@ Simplex::Simplex(Data *data)
 
 void Simplex::calculate()
 {
-    while(!is_it_end())
+    int counter = 0;
+    while(!is_it_end() && (counter < 30))
     {
+        counter++;
         find_main_col();
         find_main_row();
         _basis[_mainRow] = _mainCol;
@@ -82,17 +84,7 @@ void Simplex::calculate()
 
         _table = new_table;
     }
-    /*
-        for (int x = 0; x < _table.size(); ++x)
-        {
-            for (int y = 0; y < _table[0].size(); ++y)
-            {
-                std::cout << std::setprecision(2) << std::setw(5) << _table[x][y] << " | ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-    */
+
     double func_result = 0;
     for (int i = 0; i < _result.size(); i++)
     {
@@ -101,8 +93,11 @@ void Simplex::calculate()
         if (k != -1) { _result[i] = _table[k][0]; }
         else { _result[i] = 0; }
     }
-
-    _data.write_to_file(&_result);
+    if (counter > 30)
+    {
+        std::cout << "too many iterations, probaly not solvable" << std::endl;
+    }
+    else { _data.write_to_file(&_result); }
 }
 
 bool Simplex::is_it_end()
